@@ -1,0 +1,31 @@
+
+# servlet container 配置
+server:
+  port: 8001
+  undertow:
+    accesslog:
+      enabled: true
+      dir: access
+    # I/O线程数，这里假设我们的机器都是4核
+    io-threads: 4
+    # 工作线程数，200是压测出来的稳定值
+    worker-threads: 200
+    # 在堆外分配缓冲区
+    direct-buffers: true
+    # 每个缓冲区的大小，以字节为单位，越小的空间被利用越充分
+    buffer-size: 1024
+
+service:
+    name: @artifactId@
+
+mysql:
+  db:
+    init:
+      url: jdbc:mysql://localhost/init?useAffectedRows=true
+      username: developer
+      password: developer
+      maximum-pool-size: 20
+      readonly: false
+      connection-timeout: 30000
+      idle-timeout: 60000
+      max-lifetime: 1800000

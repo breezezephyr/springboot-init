@@ -1,0 +1,16 @@
+
+service:
+    name: @artifactId@
+
+mysql:
+  db:
+    init:
+      url: jdbc:mysql://localhost/init?useAffectedRows=true
+      username: developer
+      password: developer
+      maximum-pool-size: 20
+      readonly: false
+      connection-timeout: 30000
+      idle-timeout: 60000
+      max-lifetime: 1800000
+

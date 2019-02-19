@@ -41,7 +41,7 @@ public class MysqlDistLock implements Lock{
             connection.setAutoCommit(false);
             String sql = "SELECT lock_key from lock where lock_key = ? for UPDATE ";
             long futureTime = System.currentTimeMillis() + timeOuts;
-            long ranmain = timeOuts;
+            long remain = timeOuts;
             long timerange = 500;
             while (true) {
                 CountDownLatch latch = new CountDownLatch(1);
@@ -56,12 +56,12 @@ public class MysqlDistLock implements Lock{
                     e.printStackTrace();
                 }
                 latch.await(timerange, TimeUnit.MILLISECONDS);
-                ranmain = futureTime - System.currentTimeMillis();
-                if (ranmain <= 0) {
+                remain = futureTime - System.currentTimeMillis();
+                if (remain <= 0) {
                     break;
                 }
-                if (ranmain < timerange) {
-                    timerange = ranmain;
+                if (remain < timerange) {
+                    timerange = remain;
                 }
                 continue;
             }

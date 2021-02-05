@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Preconditions;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,8 +15,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+
+import jdk.nashorn.internal.runtime.regexp.joni.constants.Arguments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static lombok.Lombok.checkNotNull;
 
 public class JSONUtils {
     private static final Logger logger = LoggerFactory.getLogger(JSONUtils.class);
@@ -103,7 +106,7 @@ public class JSONUtils {
     }
 
     public static String toString(Object obj) {
-        Preconditions.checkNotNull(obj, "Require non-null param \'obj\'");
+        checkNotNull(obj, "Require non-null param \'obj\'");
 
         try {
             return objectMapper.writeValueAsString(obj);
